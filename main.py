@@ -13,14 +13,24 @@ class MyClient(discord.Client):
         if message.author.id == self.user.id:
             return
         
+if message.content.startswith('$help'):
+            await message.channel.send('Aku bot. Aku bisa beragai hal. ketik "$pass", maka aku akan membuatkanmu password yang kuat. Ketik "$coin", maka kita akan bermain lempar koin. Ketik "$emoji", maka aku akan mengeluarkan emoji acak. Ketik "$guess", kita akan bermain tebak angka. Ketik "$math_exercise", maka kita akan berlatih matematika')
+        
         if message.content.startswith('$hello'):
             await message.channel.send('Saya! Saya bot!')
 
         if message.content.startswith('$pass'):
-            elements = "+-/*!&$#?=@<>"
+            await message.channel.send('Mau password berapa digit?')
+            def is_correct(m):
+                return m.author == message.author and m.content.isdigit()
+            try :
+                digit = await self.wait_for('message', check=is_correct, timeout=700.0)
+            except asyncio.TimeoutError :
+                return await message.channel.send('Maaf, kamu kelamaan. Masukin perintahnya lagi')
+            elements = "+-/*!&$#?=@<>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
             password = ""
-
-            for i in range(9):
+            
+            for i in range(int(digit.content)):
                 password += random.choice(elements)
 
             await message.channel.send(password)
