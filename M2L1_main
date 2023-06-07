@@ -27,6 +27,10 @@ async def heh(ctx, count_heh = 5):
 @bot.command()
 async def mem(ctx):
     img_name = random.choice(os.listdir('images'))
+    rare = random.randint(1,7)
+    if img_name == 'MemeRare.jpg' and rare < 7:
+        img_name = random.choice(os.listdir('images'))
+        
     with open(f'images/{img_name}', 'rb') as f:
                     picture = discord.File(f)
     await ctx.send(file=picture)
