@@ -1,0 +1,66 @@
+import discord
+from discord.ext import commands
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix='$', intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f'We have logged in as {bot.user}')
+
+@bot.command()
+async def hello(ctx):
+    await ctx.send(f'Halo, Saya {bot.user}! Ketik $bantuan untuk mengetahui hal-hal apa saja yang bisa kulakukan')
+
+@bot.command()
+async def bantuan(ctx):
+    await ctx.send('Ketik $polusi untuk mengetahui solusi dari permasalahan mengerikan ini')
+
+@bot.command()
+async def polusi(ctx):
+    with open('image/globalwarming.png', 'rb') as f:
+                    picture = discord.File(f)
+    await ctx.send(file = picture)     
+    await ctx.send('Masalah ini timbul sebagai akibat dari perbuatan kita')
+    await ctx.send('Ketik $solusi untuk mengetahui hal-hal apa saja yang bisa kita lakukan')
+
+@bot.command()
+async def solusi(ctx):
+    await ctx.send('Pilih $pertama, $kedua, atau $ketiga untuk mengetahui solusinya')
+
+@bot.command()
+async def pertama(ctx):
+    await ctx.send('Bawa tempat makan sendiri saat membeli makanan') 
+    with open('image/tepakmakan.jpg', 'rb') as f:
+                    picture = discord.File(f)
+    await ctx.send(file = picture)     
+    await ctx.send('Untuk mengurangi penggunaan kantong plastik') 
+    with open('image/kantongkresek.jpg', 'rb') as f:
+                    picture = discord.File(f)
+    await ctx.send(file = picture)     
+    await ctx.send('Pilih $kedua atau $ketiga untuk melihat solusi lainnya')
+
+@bot.command() 
+async def kedua(ctx):
+    await ctx.send('Kurangi penggunaan barang-barang elektronik')
+    with open('image/elektronik.jpg', 'rb') as f:
+                    picture = discord.File(f)
+    await ctx.send(file = picture)      
+    await ctx.send('karena untuk menghasilkan listrik perlu pembakaran batu bara besar-besaran') 
+    with open('image/batubara.jpg', 'rb') as f:
+                    picture = discord.File(f)
+    await ctx.send(file = picture)        
+    await ctx.send('Pilih $pertama atau $ketiga untuk melihat solusi lainnya')
+
+@bot.command() 
+async def ketiga(ctx):
+    await ctx.send('Pakai filter dan buat corong pabrik yang tinggi untuk pabrik') 
+    with open('image/cerobong.jpeg', 'rb') as f:
+                    picture = discord.File(f)
+    await ctx.send(file = picture)     
+    await ctx.send('agar udara hasil pembuangan lebih ramah lingkungan')  
+    await ctx.send('Pilih $pertama atau $kedua untuk melihat solusi lainnya')
+
+bot.run("TOKEN")
